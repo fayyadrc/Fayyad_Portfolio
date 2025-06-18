@@ -4,11 +4,24 @@ import { Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Project } from '../types';
 
-interface ProjectsSectionProps {
-  projects: Project[];
-}
+const ProjectsSection: React.FC = () => {
+  const projects: Project[] = [
+    {
+      title: "Expense Manager",
+      description: "A comprehensive expense tracking application built with modern web technologies. Features include expense categorization, budget tracking, and detailed financial reports.",
+      technologies: ["Python", "Flask", "HTML", "CSS", "Bootstrap", "MongoDB"],
+      status: "Completed",
+      link: "#"
+    },
+    {
+      title: "CraveAI",
+      description: "An intelligent food recommendation app that uses AI to suggest personalized meal options. Built with modern React architecture and real-time data synchronization.",
+      technologies: ["React", "Tailwind CSS", "Supabase", "Authentication", "Real-time DB"],
+      status: "Under Development",
+      link: "#"
+    }
+  ];
 
-const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
   return (
     <section id="projects" className="py-20 px-6">
       <div className="max-w-6xl mx-auto">

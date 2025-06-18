@@ -42,7 +42,7 @@ const MoreProjects = () => {
             technologies: ["Testing"],
             status: "Under Development",
             github: "#"
-        },
+        }
     ];
 
     return (
