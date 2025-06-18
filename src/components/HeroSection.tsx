@@ -13,7 +13,7 @@ const HeroSection = () => {
           {/* Profile Image */}
           <div className="w-40 h-40 md:w-52 md:h-52 relative rounded-full overflow-hidden shadow-lg border-2 border-gray-300 dark:border-gray-600 flex-shrink-0">
             <img
-                src="src/assets/DSC_5862.JPG"
+                src="public/profilepicture.jpg"
                 alt="Fayyad Rahman"
                 className="w-100 h-55 object-cover"
             />
