@@ -3,7 +3,8 @@ export interface Project {
   description: string;
   technologies: string[];
   status: string;
-  link: string;
+  github: string;
+  liveLink?: string;
 }
 
 export interface NavigationItem {

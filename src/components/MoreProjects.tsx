@@ -18,33 +18,31 @@ const MoreProjects = () => {
             description: "A comprehensive expense tracking application built with modern web technologies. Features include expense categorization, budget tracking, and detailed financial reports with data visualization.",
             technologies: ["Python", "Flask", "HTML", "CSS", "Bootstrap", "MongoDB"],
             status: "Completed",
-            link: "#"
+            github: "https://github.com/fayyadrc/ExpenseTracker",
+            liveLink: "https://example.com/expense-manager" 
         },
         {
             title: "CraveAI",
             description: "An intelligent food recommendation app that uses AI to suggest personalized meal options. Built with modern React architecture and real-time data synchronization.",
             technologies: ["React", "Tailwind CSS", "Supabase", "Authentication", "Real-time DB"],
             status: "In Development",
-            link: "#"
+            github: "https://github.com/fayyadrc/CraveAI"
         },
         {
             title: "Portfolio Website",
             description: "A modern, responsive portfolio website built with React and TypeScript, featuring smooth animations and optimized performance.",
             technologies: ["React", "TypeScript", "Tailwind CSS"],
             status: "Completed",
-            link: "#"
+            github: "https://github.com/fayyadrc/Portfolio_ReactTypeScript",
+            liveLink: "https://fayyadrc.vercel.app" 
         },
         {
-            title: "PL Analysis",
+            title: "Premier League Analysis",
             description: "Machine Learning Model for Predictive Analytics",
             technologies: ["Testing"],
             status: "In Development",
-            link: "#"
+            github: "#"
         },
-        
-        
-       
-        
     ];
 
     return (
@@ -52,7 +50,6 @@ const MoreProjects = () => {
             <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
             <main className="pt-20 pb-16 px-6">
                 <div className="max-w-7xl mx-auto">
-                    
                     <div className="mb-12">
                         <Link 
                             to="/" 
@@ -73,60 +70,51 @@ const MoreProjects = () => {
                         </div> 
                     </div>
 
-                  
                     <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
                         {allProjects.map((project, index) => (
                             <div
                                 key={project.title}
-                                className="group bg-card border border-border rounded-xl p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-primary/20"
+                                className="group bg-card border border-border rounded-xl p-6 flex flex-col justify-between h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-primary/20"
                             >
-                              
-                                <div className="flex justify-between items-start mb-4">
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-2 h-2 rounded-full bg-primary"></div>
-                                        <span className="text-xs text-muted-foreground font-medium">
-                                            PROJECT {String(index + 1).padStart(2, '0')}
-                                        </span>
+                                <div>
+                                    <div className="flex justify-between items-start mb-4">
+                                        <div className="flex items-center gap-2">
+                                            <div className="w-2 h-2 rounded-full bg-primary"></div>
+                                            <span className="text-xs text-muted-foreground font-medium">
+                                                PROJECT {String(index + 1).padStart(2, '0')}
+                                            </span>
+                                        </div>
+                                        <div className="flex gap-2">
+                                            <Button variant="ghost" size="icon" asChild>
+                                                <a href={project.github} target="_blank" rel="noopener noreferrer">
+                                                    <Github className="h-4 w-4" />
+                                                </a>
+                                            </Button>
+                                        </div>
                                     </div>
-                                    <div className="flex gap-2">
-                                        <Button variant="ghost" size="icon" asChild>
-                                            <a href={project.link} target="_blank" rel="noopener noreferrer">
-                                                <ExternalLink className="h-4 w-4" />
-                                            </a>
-                                        </Button>
-                                        <Button variant="ghost" size="icon" asChild>
-                                            <a href="#" target="_blank" rel="noopener noreferrer">
-                                                <Github className="h-4 w-4" />
-                                            </a>
-                                        </Button>
+
+                                    <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
+                                        {project.title}
+                                    </h3>
+
+                                    <p className="text-muted-foreground mb-6 leading-relaxed text-sm">
+                                        {project.description}
+                                    </p>
+
+                                    <div className="flex flex-wrap gap-2 mb-6">
+                                        {project.technologies.map((tech) => (
+                                            <span
+                                                key={tech}
+                                                className="px-3 py-1 bg-muted/60 text-muted-foreground text-xs rounded-full font-medium hover:bg-primary/10 transition-colors"
+                                            >
+                                                {tech}
+                                            </span>
+                                        ))}
                                     </div>
                                 </div>
 
-                               
-                                <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">
-                                    {project.title}
-                                </h3>
-
-                                
-                                <p className="text-muted-foreground mb-6 leading-relaxed text-sm">
-                                    {project.description}
-                                </p>
-
-                                
-                                <div className="flex flex-wrap gap-2 mb-6">
-                                    {project.technologies.map((tech) => (
-                                        <span
-                                            key={tech}
-                                            className="px-3 py-1 bg-muted/60 text-muted-foreground text-xs rounded-full font-medium hover:bg-primary/10 transition-colors"
-                                        >
-                                            {tech}
-                                        </span>
-                                    ))}
-                                </div>
-
-                                
-                                <div className="flex justify-between items-center">
-                                    <span className={`text-xs px-3 py-1 rounded-full font-medium ${
+                                <div className="flex justify-between items-center mt-auto">
+                                    <span className={`text-xs px-3 py-1 rounded-full ${
                                         project.status === 'Completed'
                                             ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
                                             : 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400'
@@ -134,11 +122,13 @@ const MoreProjects = () => {
                                         {project.status}
                                     </span>
                                     
-                                    <Button variant="ghost" size="sm" className="text-xs" asChild>
-                                        <a href={project.link} target="_blank" rel="noopener noreferrer">
-                                            View Details
-                                        </a>
-                                    </Button>
+                                    {project.liveLink && (
+                                        <Button variant="ghost" size="sm" className="text-xs" asChild>
+                                            <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
+                                                Live Demo
+                                            </a>
+                                        </Button>
+                                    )}
                                 </div>
                             </div>
                         ))}
