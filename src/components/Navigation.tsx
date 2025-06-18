@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Github, Linkedin, Sun, Moon } from 'lucide-react';
+import { Github, Linkedin, Sun, Moon , FileUser} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { NavigationItem } from '../types';
+import { Link } from 'react-router-dom';
 
 interface NavigationProps {
   activeSection: string;
@@ -26,7 +27,9 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection, setActiveSection
       <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
         <div className="max-w-6xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <h1 className="text-xl font-bold">@fayyadrc</h1>
+            <Link to="/" className="text-xl font-bold hover:text-primary transition-colors">
+        @fayyadrc
+      </Link>
             <div className="hidden md:flex space-x-8">
               {navigationItems.map((item) => (
                   <button
@@ -49,6 +52,11 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection, setActiveSection
               <Button variant="ghost" size="icon" asChild>
                 <a href="https://www.linkedin.com/in/fayyadrc/" target="_blank" rel="noopener noreferrer">
                   <Linkedin className="h-5 w-5" />
+                </a>
+              </Button>
+              <Button variant="ghost" size="icon" asChild>
+                <a href="" target="_blank" rel="noopener noreferrer">
+                  <FileUser className="h-5 w-5" />
                 </a>
               </Button>
               <button onClick={toggleDarkMode} className="p-2">

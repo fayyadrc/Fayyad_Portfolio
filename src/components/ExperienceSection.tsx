@@ -12,10 +12,10 @@ interface Experience {
 
 const experiences: Experience[] = [
     {
-        company: "Company 1",
+        company: "Hogwarts School of Witchcraft and Wizardry",
         role: "Data Analyst Intern",
         period: "June 2025 – Present",
-        description: "bins  ",
+        description: "Wingardium Leviosa! Analyzed large datasets to extract actionable insights. Developed interactive dashboards and reports to visualize data trends.",
         skills: ["Python", "Pandas", "Numpy"],
         emoji: "💻",
     },
@@ -41,7 +41,6 @@ const ExperienceSection: React.FC = () => {
                 </div>
 
                 <div className="relative">
-                    {/* Timeline line */}
                     <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-border" />
 
                     <div className="space-y-12">
@@ -75,7 +74,6 @@ const ExperienceSection: React.FC = () => {
                                     </div>
                                 </div>
 
-                                {/* Timeline dot */}
                                 <div className="relative z-10">
                                     <div className="w-4 h-4 bg-primary rounded-full border-4 border-background shadow-lg animate-pulse"></div>
                                 </div>

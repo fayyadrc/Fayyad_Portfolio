@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router,  Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import Navigation from './components/Navigation';
 import HeroSection from './components/HeroSection';
@@ -31,8 +31,6 @@ function App() {
     ];
 
 
-
-
     return (
         <div className={`min-h-screen ${isDarkMode ? 'bg-gray-900 text-white' : 'bg-background text-foreground'}`}>
             <Navigation activeSection={activeSection} setActiveSection={setActiveSection}/>
@@ -45,6 +43,7 @@ function App() {
                     </>
                 } />
                 <Route path="/projects" element={<MoreProjects />} />
+                
             </Routes>
             <Footer />
         </div>
