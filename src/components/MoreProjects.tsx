@@ -19,13 +19,13 @@ const MoreProjects = () => {
             technologies: ["Python", "Flask", "HTML", "CSS", "Bootstrap", "MongoDB"],
             status: "Completed",
             github: "https://github.com/fayyadrc/ExpenseTracker",
-            liveLink: "https://example.com/expense-manager" 
+            liveLink: "" 
         },
         {
             title: "CraveAI",
             description: "An intelligent food recommendation app that uses AI to suggest personalized meal options. Built with modern React architecture and real-time data synchronization.",
             technologies: ["React", "Tailwind CSS", "Supabase", "Authentication", "Real-time DB"],
-            status: "In Development",
+            status: "Under Development",
             github: "https://github.com/fayyadrc/CraveAI"
         },
         {
@@ -40,7 +40,7 @@ const MoreProjects = () => {
             title: "Premier League Analysis",
             description: "Machine Learning Model for Predictive Analytics",
             technologies: ["Testing"],
-            status: "In Development",
+            status: "Under Development",
             github: "#"
         },
     ];
