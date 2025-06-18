@@ -1,4 +1,5 @@
-Personal Portfolio – [fayyadrc.vercel.app](https://fayyadrc.vercel.app)
+**Personal Portfolio**
+[fayyadrc.vercel.app](https://fayyadrc.vercel.app)
 
 Tech Stack
 
