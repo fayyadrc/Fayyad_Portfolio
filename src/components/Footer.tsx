@@ -1,4 +1,5 @@
 import { Mail, Linkedin, Github } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
 
@@ -36,7 +37,14 @@ const Footer = () => {
 
                 {/* Copyright */}
                 <p className=" text-sm">
-                    © {new Date().getFullYear()} Fayyad Rahman • Built with React, TypeScript & Appwrite
+                    © {new Date().getFullYear()} Fayyad Rahman • Built with{' '}
+                    <Link 
+                        to="/admin" 
+                        className="text-blue-600 hover:text-blue-800 underline transition-colors"
+                    >
+                        React, TypeScript & Appwrite
+                    </Link>
+                    
                 </p>
             </div>
         </footer>
