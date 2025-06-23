@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Save, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from '../components/ui/button';
 import { Experience, Project } from '../types';
 import { experienceService, projectService } from '../lib/appwriteService';
+import { authService } from '../lib/authService';
+import { useNavigate } from 'react-router-dom';
 
 const emptyExperience: Omit<Experience, '$id'> = {
   company: '',
@@ -35,6 +37,8 @@ const AdminPage = () => {
   const [showProjectForm, setShowProjectForm] = useState(false);
   const [expForm, setExpForm] = useState(emptyExperience);
   const [projForm, setProjForm] = useState(emptyProject);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();
@@ -126,6 +130,11 @@ const AdminPage = () => {
     }
   };
 
+  const handleLogout = async () => {
+    await authService.logout();
+    navigate('/login');
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background p-6">
@@ -137,9 +146,12 @@ const AdminPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background p-6">
+    <div className="min-h-screen bg-background p-6 pt-28">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold mb-8">Portfolio Admin</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-4xl font-bold">Admin Dashboard</h1>
+          <Button onClick={handleLogout} variant="outline">Logout</Button>
+        </div>
         {/* Tabs */}
         <div className="flex space-x-4 mb-8">
           <button
