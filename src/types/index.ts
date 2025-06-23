@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface Project {
   title: string;
   description: string;
@@ -29,5 +31,14 @@ export interface ContactMethod {
   icon: React.ElementType;
   url: string;
   variant: 'default' | 'outline';
+}
+
+export interface Experience {
+  company: string;
+  role: string;
+  period: string;
+  description: string;
+  skills: string[];
+  emoji?: string;
 }
 

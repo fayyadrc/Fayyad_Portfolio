@@ -1,29 +1,9 @@
 //import { Mail, Linkedin, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ContactMethod } from '../types';
+import { contactMethods } from '../lib/data';
 
 const ContactSection: React.FC = () => {
-  const contactMethods: ContactMethod[] = [
-    {
-      label: 'Send Email',
-      icon: Mail,
-      url: 'mailto:fayyad@gmail.com',
-      variant: 'default'
-    },
-    {
-      label: 'Connect on LinkedIn',
-      icon: Linkedin,
-      url: 'https://www.linkedin.com/in/fayyadrc/',
-      variant: 'outline'
-    },
-    {
-      label: 'View GitHub',
-      icon: Github,
-      url: 'https://github.com/fayyadrc',
-      variant: 'outline'
-    }
-  ];
-
   return (
     <section id="contact" className="py-20 px-6 bg-muted/30">
       <div className="max-w-4xl mx-auto text-center">

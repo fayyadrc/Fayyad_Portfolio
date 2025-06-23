@@ -1,9 +1,5 @@
 import React from 'react';
-
-const skills = [
-  "JavaScript/TypeScript", "Python", "React", "MongoDB", "Flask/Django",
-  "Tailwind/Bootstrap", "Supabase", "Git", "HTML/CSS", "PostgreSQL/SQLServer"
-];
+import { skills } from '../lib/data';
 
 const HeroSection = () => {
   return (

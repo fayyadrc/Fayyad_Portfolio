@@ -1,5 +1,6 @@
 import React from 'react';
 import { Calendar } from 'lucide-react';
+import { experiences } from '../lib/data';
 
 interface Experience {
     company: string;
@@ -9,25 +10,6 @@ interface Experience {
     skills: string[];
     emoji?: string;
 }
-
-const experiences: Experience[] = [
-    {
-        company: "Hogwarts School of Witchcraft and Wizardry",
-        role: "Data Analyst Intern",
-        period: "June 2025 – Present",
-        description: "Wingardium Leviosa! Analyzed large datasets to extract actionable insights. Developed interactive dashboards and reports to visualize data trends.",
-        skills: ["Python", "Pandas", "Numpy"],
-        emoji: "💻",
-    },
-    {
-        company: "Rolta EMEA",
-        role: "Software Engineer Intern",
-        period: "July 2023 – August 2023",
-        description: "Developed Admin and Employee Dashboards for project hour management. Collaborated with cross-functional teams using full-stack development skills.",
-        skills: ["ASP.NET MVC", "C#", "SQL Server"],
-        emoji: "💻",
-    }
-];
 
 const ExperienceSection: React.FC = () => {
     return (

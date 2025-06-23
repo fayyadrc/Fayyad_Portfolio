@@ -3,24 +3,10 @@ import { Link } from 'react-router-dom';
 import { Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Project } from '../types';
+import { topProjects } from '../lib/data';
 
 const ProjectsSection: React.FC = () => {
-  const projects: Project[] = [
-    {
-      title: "Expense Manager",
-      description: "A comprehensive expense tracking application built with modern web technologies. Features include expense categorization, budget tracking, and detailed financial reports.",
-      technologies: ["Python", "Flask", "HTML", "CSS", "Bootstrap", "MongoDB"],
-      status: "Completed",
-      link: "#"
-    },
-    {
-      title: "CraveAI",
-      description: "An intelligent food recommendation app that uses AI to suggest personalized meal options. Built with modern React architecture and real-time data synchronization.",
-      technologies: ["React", "Tailwind CSS", "Supabase", "Authentication", "Real-time DB"],
-      status: "Under Development",
-      link: "#"
-    }
-  ];
+  const projects = topProjects;
 
   return (
     <section id="projects" className="py-20 px-6">

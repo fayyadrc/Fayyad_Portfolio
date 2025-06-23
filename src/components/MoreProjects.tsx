@@ -4,6 +4,7 @@ import { ExternalLink, Github, ArrowLeft } from 'lucide-react';
 import Navigation from "./Navigation";
 import { Button } from '@/components/ui/button';
 import { Project } from '../types';
+import { allProjects } from '../lib/data';
 
 const MoreProjects = () => {
     const [activeSection, setActiveSection] = useState('projects');
@@ -12,39 +13,6 @@ const MoreProjects = () => {
         window.scrollTo(0, 0);
     }, []);
     
-    const allProjects: Project[] = [
-        {
-            title: "Expense Manager",
-            description: "A comprehensive expense tracking application built with modern web technologies. Features include expense categorization, budget tracking, and detailed financial reports with data visualization.",
-            technologies: ["Python", "Flask", "HTML", "CSS", "Bootstrap", "MongoDB"],
-            status: "Completed",
-            github: "https://github.com/fayyadrc/ExpenseTracker",
-            liveLink: "" 
-        },
-        {
-            title: "CraveAI",
-            description: "An intelligent food recommendation app that uses AI to suggest personalized meal options. Built with modern React architecture and real-time data synchronization.",
-            technologies: ["React", "Tailwind CSS", "Supabase", "Authentication", "Real-time DB"],
-            status: "Under Development",
-            github: "https://github.com/fayyadrc/CraveAI"
-        },
-        {
-            title: "Portfolio Website",
-            description: "A modern, responsive portfolio website built with React and TypeScript, featuring smooth animations and optimized performance.",
-            technologies: ["React", "TypeScript", "Tailwind CSS"],
-            status: "Completed",
-            github: "https://github.com/fayyadrc/Portfolio_ReactTypeScript",
-            liveLink: "https://fayyadrc.vercel.app" 
-        },
-        {
-            title: "Premier League Analysis",
-            description: "Machine Learning Model for Predictive Analytics",
-            technologies: ["Testing"],
-            status: "Under Development",
-            github: "#"
-        }
-    ];
-
     return (
         <div className="min-h-screen bg-background text-foreground">
             <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
