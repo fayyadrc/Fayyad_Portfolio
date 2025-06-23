@@ -137,7 +137,7 @@ const AdminPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background p-6">
+      <div className="min-h-screen bg-background p-4 md:p-6">
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
         </div>
@@ -146,17 +146,17 @@ const AdminPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background p-6 pt-28">
+    <div className="min-h-screen bg-background p-4 md:p-6 pt-20 md:pt-28">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold">Admin Dashboard</h1>
-          <Button onClick={handleLogout} variant="outline">Logout</Button>
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6 md:mb-8">
+          <h1 className="text-2xl md:text-4xl font-bold">Admin Dashboard</h1>
+          <Button onClick={handleLogout} variant="outline" className="w-full md:w-auto">Logout</Button>
         </div>
         {/* Tabs */}
-        <div className="flex space-x-4 mb-8">
+        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-6 md:mb-8">
           <button
             onClick={() => setActiveTab('experiences')}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+            className={`px-4 py-2 rounded-lg font-medium transition-colors text-sm md:text-base ${
               activeTab === 'experiences'
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-muted text-muted-foreground hover:bg-muted/80'
@@ -166,7 +166,7 @@ const AdminPage = () => {
           </button>
           <button
             onClick={() => setActiveTab('projects')}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+            className={`px-4 py-2 rounded-lg font-medium transition-colors text-sm md:text-base ${
               activeTab === 'projects'
                 ? 'bg-primary text-primary-foreground'
                 : 'bg-muted text-muted-foreground hover:bg-muted/80'
@@ -179,65 +179,70 @@ const AdminPage = () => {
         {/* Experiences Tab */}
         {activeTab === 'experiences' && (
           <div>
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-semibold">Experiences</h2>
-              <Button onClick={() => { setShowExperienceForm(true); setEditingExperience(null); setExpForm(emptyExperience); }}>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
+              <h2 className="text-xl md:text-2xl font-semibold">Experiences</h2>
+              <Button 
+                onClick={() => { setShowExperienceForm(true); setEditingExperience(null); setExpForm(emptyExperience); }}
+                className="w-full sm:w-auto"
+              >
                 <Plus className="w-4 h-4 mr-2" /> Add Experience
               </Button>
             </div>
             {showExperienceForm && (
-              <form onSubmit={handleSaveExperience} className="rounded-xl shadow p-8 mb-8 max-w-2xl mx-auto border border-border">
-                <h3 className="text-xl font-semibold mb-6 text-primary flex items-center gap-2">
-                  {editingExperience ? <Edit2 className="w-5 h-5" /> : <Plus className="w-5 h-5" />} {editingExperience ? 'Edit Experience' : 'Add Experience'}
+              <form onSubmit={handleSaveExperience} className="rounded-xl shadow p-4 md:p-8 mb-6 md:mb-8 max-w-2xl mx-auto border border-border">
+                <h3 className="text-lg md:text-xl font-semibold mb-4 md:mb-6 text-primary flex items-center gap-2">
+                  {editingExperience ? <Edit2 className="w-4 h-4 md:w-5 md:h-5" /> : <Plus className="w-4 h-4 md:w-5 md:h-5" />} {editingExperience ? 'Edit Experience' : 'Add Experience'}
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   <div>
                     <label className="block text-sm font-medium mb-1">Company</label>
-                    <input required className="input w-full" placeholder="Company" value={expForm.company} onChange={e => setExpForm(f => ({ ...f, company: e.target.value }))} />
+                    <input required className="input w-full text-sm md:text-base" placeholder="Company" value={expForm.company} onChange={e => setExpForm(f => ({ ...f, company: e.target.value }))} />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1">Role</label>
-                    <input required className="input w-full" placeholder="Role" value={expForm.role} onChange={e => setExpForm(f => ({ ...f, role: e.target.value }))} />
+                    <input required className="input w-full text-sm md:text-base" placeholder="Role" value={expForm.role} onChange={e => setExpForm(f => ({ ...f, role: e.target.value }))} />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1">Period</label>
-                    <input required className="input w-full" placeholder="Period" value={expForm.period} onChange={e => setExpForm(f => ({ ...f, period: e.target.value }))} />
+                    <input required className="input w-full text-sm md:text-base" placeholder="Period" value={expForm.period} onChange={e => setExpForm(f => ({ ...f, period: e.target.value }))} />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1">Emoji</label>
-                    <input className="input w-full" placeholder="Emoji (optional)" value={expForm.emoji} onChange={e => setExpForm(f => ({ ...f, emoji: e.target.value }))} />
+                    <input className="input w-full text-sm md:text-base" placeholder="Emoji (optional)" value={expForm.emoji} onChange={e => setExpForm(f => ({ ...f, emoji: e.target.value }))} />
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium mb-1">Description</label>
-                    <textarea required className="input w-full min-h-[60px] resize-y" placeholder="Description" value={expForm.description} onChange={e => setExpForm(f => ({ ...f, description: e.target.value }))} />
+                    <textarea required className="input w-full min-h-[60px] resize-y text-sm md:text-base" placeholder="Description" value={expForm.description} onChange={e => setExpForm(f => ({ ...f, description: e.target.value }))} />
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium mb-1">Skills (comma separated)</label>
-                    <input required className="input w-full" placeholder="e.g. Python, Pandas, Numpy" value={expForm.skills} onChange={e => setExpForm(f => ({ ...f, skills: e.target.value }))} />
+                    <input required className="input w-full text-sm md:text-base" placeholder="e.g. Python, Pandas, Numpy" value={expForm.skills} onChange={e => setExpForm(f => ({ ...f, skills: e.target.value }))} />
                   </div>
                 </div>
-                <div className="flex gap-3 mt-8 justify-end">
-                  <Button type="submit" className="bg-primary text-white flex items-center gap-1 shadow-md hover:bg-primary/90"><Save className="w-4 h-4" /> Save</Button>
-                  <Button type="button" variant="outline" onClick={() => { setShowExperienceForm(false); setEditingExperience(null); setExpForm(emptyExperience); }} className="flex items-center gap-1"><X className="w-4 h-4" /> Cancel</Button>
+                <div className="flex flex-col sm:flex-row gap-3 mt-6 md:mt-8 justify-end">
+                  <Button type="submit" className="bg-primary text-white flex items-center gap-1 shadow-md hover:bg-primary/90 text-sm md:text-base"><Save className="w-4 h-4" /> Save</Button>
+                  <Button type="button" variant="outline" onClick={() => { setShowExperienceForm(false); setEditingExperience(null); setExpForm(emptyExperience); }} className="flex items-center gap-1 text-sm md:text-base"><X className="w-4 h-4" /> Cancel</Button>
                 </div>
               </form>
             )}
-            <ul className="space-y-4">
+            <ul className="space-y-3 md:space-y-4">
               {experiences.map(exp => (
-                <li key={exp.$id} className="bg-card rounded-lg shadow p-4 flex justify-between items-center">
-                  <div>
-                    <div className="font-semibold text-lg">{exp.company} <span className="text-base font-normal">({exp.period})</span></div>
-                    <div className="text-sm text-muted-foreground">{exp.role}</div>
-                    <div className="text-sm mt-1">{exp.description}</div>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {exp.skills.split(',').map((skill, i) => (
-                        <span key={i} className="px-2 py-1 bg-muted text-xs rounded-md">{skill.trim()}</span>
-                      ))}
+                <li key={exp.$id} className="bg-card rounded-lg shadow p-3 md:p-4">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
+                    <div className="flex-1">
+                      <div className="font-semibold text-base md:text-lg">{exp.company} <span className="text-sm md:text-base font-normal">({exp.period})</span></div>
+                      <div className="text-xs md:text-sm text-muted-foreground">{exp.role}</div>
+                      <div className="text-xs md:text-sm mt-1">{exp.description}</div>
+                      <div className="flex flex-wrap gap-1.5 md:gap-2 mt-2">
+                        {exp.skills.split(',').map((skill, i) => (
+                          <span key={i} className="px-2 py-1 bg-muted text-xs rounded-md">{skill.trim()}</span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button variant="outline" onClick={() => handleEditExperience(exp)}><Edit2 className="w-4 h-4" /></Button>
-                    <Button variant="destructive" onClick={() => handleDeleteExperience(exp.$id)}><Trash2 className="w-4 h-4" /></Button>
+                    <div className="flex gap-2 self-end md:self-auto">
+                      <Button variant="outline" size="sm" onClick={() => handleEditExperience(exp)}><Edit2 className="w-3 h-3 md:w-4 md:h-4" /></Button>
+                      <Button variant="destructive" size="sm" onClick={() => handleDeleteExperience(exp.$id)}><Trash2 className="w-3 h-3 md:w-4 md:h-4" /></Button>
+                    </div>
                   </div>
                 </li>
               ))}
@@ -248,74 +253,79 @@ const AdminPage = () => {
         {/* Projects Tab */}
         {activeTab === 'projects' && (
           <div>
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-semibold">Projects</h2>
-              <Button onClick={() => { setShowProjectForm(true); setEditingProject(null); setProjForm(emptyProject); }}>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
+              <h2 className="text-xl md:text-2xl font-semibold">Projects</h2>
+              <Button 
+                onClick={() => { setShowProjectForm(true); setEditingProject(null); setProjForm(emptyProject); }}
+                className="w-full sm:w-auto"
+              >
                 <Plus className="w-4 h-4 mr-2" /> Add Project
               </Button>
             </div>
             {showProjectForm && (
-              <form onSubmit={handleSaveProject} className="bg-card rounded-xl shadow p-8 mb-8 max-w-2xl mx-auto border border-border">
-                <h3 className="text-xl font-semibold mb-6 text-primary flex items-center gap-2">
-                  {editingProject ? <Edit2 className="w-5 h-5" /> : <Plus className="w-5 h-5" />} {editingProject ? 'Edit Project' : 'Add Project'}
+              <form onSubmit={handleSaveProject} className="bg-card rounded-xl shadow p-4 md:p-8 mb-6 md:mb-8 max-w-2xl mx-auto border border-border">
+                <h3 className="text-lg md:text-xl font-semibold mb-4 md:mb-6 text-primary flex items-center gap-2">
+                  {editingProject ? <Edit2 className="w-4 h-4 md:w-5 md:h-5" /> : <Plus className="w-4 h-4 md:w-5 md:h-5" />} {editingProject ? 'Edit Project' : 'Add Project'}
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   <div>
                     <label className="block text-sm font-medium mb-1">Title</label>
-                    <input required className="input w-full" placeholder="Title" value={projForm.title} onChange={e => setProjForm(f => ({ ...f, title: e.target.value }))} />
+                    <input required className="input w-full text-sm md:text-base" placeholder="Title" value={projForm.title} onChange={e => setProjForm(f => ({ ...f, title: e.target.value }))} />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1">Status</label>
-                    <input required className="input w-full" placeholder="Status" value={projForm.status} onChange={e => setProjForm(f => ({ ...f, status: e.target.value }))} />
+                    <input required className="input w-full text-sm md:text-base" placeholder="Status" value={projForm.status} onChange={e => setProjForm(f => ({ ...f, status: e.target.value }))} />
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium mb-1">Description</label>
-                    <textarea required className="input w-full min-h-[60px] resize-y" placeholder="Description" value={projForm.description} onChange={e => setProjForm(f => ({ ...f, description: e.target.value }))} />
+                    <textarea required className="input w-full min-h-[60px] resize-y text-sm md:text-base" placeholder="Description" value={projForm.description} onChange={e => setProjForm(f => ({ ...f, description: e.target.value }))} />
                   </div>
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium mb-1">Technologies (comma separated)</label>
-                    <input required className="input w-full" placeholder="e.g. React, Tailwind CSS, Supabase" value={projForm.technologies} onChange={e => setProjForm(f => ({ ...f, technologies: e.target.value }))} />
+                    <input required className="input w-full text-sm md:text-base" placeholder="e.g. React, Tailwind CSS, Supabase" value={projForm.technologies} onChange={e => setProjForm(f => ({ ...f, technologies: e.target.value }))} />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1">GitHub Link</label>
-                    <input required className="input w-full" placeholder="GitHub Link" value={projForm.github} onChange={e => setProjForm(f => ({ ...f, github: e.target.value }))} />
+                    <input required className="input w-full text-sm md:text-base" placeholder="GitHub Link" value={projForm.github} onChange={e => setProjForm(f => ({ ...f, github: e.target.value }))} />
                   </div>
                   <div>
                     <label className="block text-sm font-medium mb-1">Live Link</label>
-                    <input className="input w-full" placeholder="Live Link (optional)" value={projForm.liveLink} onChange={e => setProjForm(f => ({ ...f, liveLink: e.target.value }))} />
+                    <input className="input w-full text-sm md:text-base" placeholder="Live Link (optional)" value={projForm.liveLink} onChange={e => setProjForm(f => ({ ...f, liveLink: e.target.value }))} />
                   </div>
                 </div>
-                <div className="flex gap-3 mt-8 justify-end">
-                  <Button type="submit" className="bg-primary text-white flex items-center gap-1 shadow-md hover:bg-primary/90"><Save className="w-4 h-4" /> Save</Button>
-                  <Button type="button" variant="outline" onClick={() => { setShowProjectForm(false); setEditingProject(null); setProjForm(emptyProject); }} className="flex items-center gap-1"><X className="w-4 h-4" /> Cancel</Button>
+                <div className="flex flex-col sm:flex-row gap-3 mt-6 md:mt-8 justify-end">
+                  <Button type="submit" className="bg-primary text-white flex items-center gap-1 shadow-md hover:bg-primary/90 text-sm md:text-base"><Save className="w-4 h-4" /> Save</Button>
+                  <Button type="button" variant="outline" onClick={() => { setShowProjectForm(false); setEditingProject(null); setProjForm(emptyProject); }} className="flex items-center gap-1 text-sm md:text-base"><X className="w-4 h-4" /> Cancel</Button>
                 </div>
               </form>
             )}
-            <ul className="space-y-4">
+            <ul className="space-y-3 md:space-y-4">
               {projects.map(proj => (
-                <li key={proj.$id} className="bg-card rounded-lg shadow p-4 flex justify-between items-center">
-                  <div>
-                    <div className="font-semibold text-lg">{proj.title}</div>
-                    <div className="text-sm text-muted-foreground">{proj.status}</div>
-                    <div className="text-sm mt-1">{proj.description}</div>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      {proj.technologies.split(',').map((tech, i) => (
-                        <span key={i} className="px-2 py-1 bg-muted text-xs rounded-md">{tech.trim()}</span>
-                      ))}
+                <li key={proj.$id} className="bg-card rounded-lg shadow p-3 md:p-4">
+                  <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
+                    <div className="flex-1">
+                      <div className="font-semibold text-base md:text-lg">{proj.title}</div>
+                      <div className="text-xs md:text-sm text-muted-foreground">{proj.status}</div>
+                      <div className="text-xs md:text-sm mt-1">{proj.description}</div>
+                      <div className="flex flex-wrap gap-1.5 md:gap-2 mt-2">
+                        {proj.technologies.split(',').map((tech, i) => (
+                          <span key={i} className="px-2 py-1 bg-muted text-xs rounded-md">{tech.trim()}</span>
+                        ))}
+                      </div>
+                      <div className="text-xs mt-2">
+                        <a href={proj.github} target="_blank" rel="noopener noreferrer" className="text-primary underline">GitHub</a>
+                        {proj.liveLink && (
+                          <>
+                            {' | '}
+                            <a href={proj.liveLink} target="_blank" rel="noopener noreferrer" className="text-primary underline">Live</a>
+                          </>
+                        )}
+                      </div>
                     </div>
-                    <div className="text-xs mt-2">
-                      <a href={proj.github} target="_blank" rel="noopener noreferrer" className="text-primary underline">GitHub</a>
-                      {proj.liveLink && (
-                        <>
-                          {' | '}
-                          <a href={proj.liveLink} target="_blank" rel="noopener noreferrer" className="text-primary underline">Live</a>
-                        </>
-                      )}
+                    <div className="flex gap-2 self-end md:self-auto">
+                      <Button variant="outline" size="sm" onClick={() => handleEditProject(proj)}><Edit2 className="w-3 h-3 md:w-4 md:h-4" /></Button>
+                      <Button variant="destructive" size="sm" onClick={() => handleDeleteProject(proj.$id)}><Trash2 className="w-3 h-3 md:w-4 md:h-4" /></Button>
                     </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <Button variant="outline" onClick={() => handleEditProject(proj)}><Edit2 className="w-4 h-4" /></Button>
-                    <Button variant="destructive" onClick={() => handleDeleteProject(proj.$id)}><Trash2 className="w-4 h-4" /></Button>
                   </div>
                 </li>
               ))}

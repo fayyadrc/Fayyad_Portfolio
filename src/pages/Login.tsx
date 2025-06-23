@@ -29,11 +29,11 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <form onSubmit={handleSubmit} className="bg-card border border-border rounded-xl shadow p-8 w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Admin Login</h2>
+    <div className="min-h-screen flex items-center justify-center bg-background p-4">
+      <form onSubmit={handleSubmit} className="bg-card border border-border rounded-xl shadow p-6 md:p-8 w-full max-w-sm md:max-w-md">
+        <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-center">Admin Login</h2>
         {error && (
-          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
             {error}
           </div>
         )}
@@ -41,26 +41,28 @@ const Login: React.FC = () => {
           <label className="block text-sm font-medium mb-1">Email</label>
           <input
             type="email"
-            className="input w-full"
+            className="input w-full text-sm md:text-base"
             value={email}
             onChange={e => setEmail(e.target.value)}
             required
             autoFocus
+            placeholder="Enter your email"
           />
         </div>
         <div className="mb-6">
           <label className="block text-sm font-medium mb-1">Password</label>
           <input
             type="password"
-            className="input w-full"
+            className="input w-full text-sm md:text-base"
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
+            placeholder="Enter your password"
           />
         </div>
         <button 
           type="submit" 
-          className="w-full bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 disabled:opacity-50"
+          className="w-full bg-primary text-primary-foreground px-4 py-3 md:py-2 rounded-md hover:bg-primary/90 disabled:opacity-50 text-sm md:text-base font-medium"
           disabled={loading}
         >
           {loading ? 'Logging in...' : 'Login'}
