@@ -7,11 +7,12 @@ const HeroSection = () => {
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-center gap-10 text-center md:text-left">
 
           {/* Profile Image */}
-          <div className="w-40 h-40 md:w-52 md:h-52 relative rounded-full overflow-hidden shadow-lg border-2 border-gray-300 dark:border-gray-600 flex-shrink-0">
+          <div className="w-40 h-40 md:w-60 md:h-60 relative rounded-full overflow-hidden shadow-lg border-2 border-gray-300 dark:border-gray-600 flex-shrink-0">
             <img
-                src="/profilepicture.jpg"
+                src="/frc_pfp.png"
                 alt="Fayyad Rahman"
-                className="w-100 h-55 object-cover"
+                className="w-full h-full object-cover scale-[2] transform"
+                
             />
           </div>
 

@@ -36,7 +36,7 @@ const Footer = () => {
 
                 {/* Copyright */}
                 <p className=" text-sm">
-                    © {new Date().getFullYear()} Fayyad Rahman • Built with React & TypeScript
+                    © {new Date().getFullYear()} Fayyad Rahman • Built with React, TypeScript & Appwrite
                 </p>
             </div>
         </footer>
