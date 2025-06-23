@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Project } from '../types';
-import { topProjects } from '../lib/data';
+import { fetchProjects } from '../lib/data';
 
 const ProjectsSection: React.FC = () => {
-  const projects = topProjects;
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchProjects().then(data => {
+      setProjects(data);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading) {
+    return <div className="text-center py-20">Loading projects...</div>;
+  }
 
   return (
     <section id="projects" className="py-20 px-6">
@@ -19,9 +31,9 @@ const ProjectsSection: React.FC = () => {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {projects.map((project) => (
+          {projects.slice(0, 2).map((project) => (
             <div
-              key={project.title}
+              key={project.$id}
               className="group bg-card border border-border rounded-lg p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
               <div className="flex justify-between items-start mb-4">
@@ -42,7 +54,11 @@ const ProjectsSection: React.FC = () => {
               </p>
 
               <div className="flex flex-wrap gap-2 mb-4">
-                {project.technologies.map((tech) => (
+                {(
+                  typeof project.technologies === 'string'
+                    ? (project.technologies as string).split(',').map((t: string) => t.trim())
+                    : (project.technologies as string[])
+                ).map((tech: string) => (
                   <span
                     key={tech}
                     className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-md"

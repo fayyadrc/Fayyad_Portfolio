@@ -4,15 +4,25 @@ import { ExternalLink, Github, ArrowLeft } from 'lucide-react';
 import Navigation from "./Navigation";
 import { Button } from '@/components/ui/button';
 import { Project } from '../types';
-import { allProjects } from '../lib/data';
+import { fetchProjects } from '../lib/data';
 
 const MoreProjects = () => {
     const [activeSection, setActiveSection] = useState('projects');
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        fetchProjects().then(data => {
+            setProjects(data);
+            setLoading(false);
+        });
     }, []);
     
+    if (loading) {
+        return <div className="text-center py-20">Loading projects...</div>;
+    }
+
     return (
         <div className="min-h-screen bg-background text-foreground">
             <Navigation activeSection={activeSection} setActiveSection={setActiveSection} />
@@ -39,9 +49,9 @@ const MoreProjects = () => {
                     </div>
 
                     <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
-                        {allProjects.map((project, index) => (
+                        {projects.map((project, index) => (
                             <div
-                                key={project.title}
+                                key={project.$id}
                                 className="group bg-card border border-border rounded-xl p-6 flex flex-col justify-between h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-primary/20"
                             >
                                 <div>
@@ -70,7 +80,11 @@ const MoreProjects = () => {
                                     </p>
 
                                     <div className="flex flex-wrap gap-2 mb-6">
-                                        {project.technologies.map((tech) => (
+                                        {(
+                                            typeof project.technologies === 'string'
+                                                ? (project.technologies as string).split(',').map((t: string) => t.trim())
+                                                : (project.technologies as string[])
+                                        ).map((tech: string) => (
                                             <span
                                                 key={tech}
                                                 className="px-3 py-1 bg-muted/60 text-muted-foreground text-xs rounded-full font-medium hover:bg-primary/10 transition-colors"

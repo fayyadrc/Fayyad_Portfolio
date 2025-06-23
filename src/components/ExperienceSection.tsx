@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Calendar } from 'lucide-react';
-import { experiences } from '../lib/data';
-
-interface Experience {
-    company: string;
-    role: string;
-    period: string;
-    description: string;
-    skills: string[];
-    emoji?: string;
-}
+import { fetchExperiences } from '../lib/data';
+import { Experience } from '../types';
 
 const ExperienceSection: React.FC = () => {
+    const [experiences, setExperiences] = useState<Experience[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchExperiences().then(data => {
+            setExperiences(data);
+            setLoading(false);
+        });
+    }, []);
+
+    if (loading) {
+        return <div className="text-center py-20">Loading experiences...</div>;
+    }
+
     return (
         <section id="experience" className="py-20 px-6">
             <div className="max-w-5xl mx-auto">
@@ -28,7 +34,7 @@ const ExperienceSection: React.FC = () => {
                     <div className="space-y-12">
                         {experiences.map((exp, index) => (
                             <div
-                                key={index}
+                                key={exp.$id}
                                 className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
                             >
                                 <div className="w-1/2 px-6">
@@ -44,13 +50,17 @@ const ExperienceSection: React.FC = () => {
                                         </div>
                                         <p className="text-sm text-muted-foreground mb-3">{exp.description}</p>
                                         <div className="flex flex-wrap gap-2">
-                                            {exp.skills.map((skill, i) => (
+                                            {(
+                                                typeof exp.skills === 'string'
+                                                    ? (exp.skills as string).split(',').map((s: string) => s.trim())
+                                                    : (exp.skills as string[])
+                                            ).map((skill: string, i: number) => (
                                                 <span
                                                     key={i}
                                                     className="px-3 py-1 bg-muted text-muted-foreground text-xs rounded-md"
                                                 >
-                          {skill}
-                        </span>
+                                                    {skill}
+                                                </span>
                                             ))}
                                         </div>
                                     </div>

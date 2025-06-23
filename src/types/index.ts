@@ -1,9 +1,16 @@
 import React from 'react';
 
-export interface Project {
+export interface AppwriteDocument {
+  $id: string;
+  $createdAt?: string;
+  $updatedAt?: string;
+}
+
+export interface Project extends AppwriteDocument {
+  $id: string;
   title: string;
   description: string;
-  technologies: string[];
+  technologies: string;
   status: string;
   github: string;
   liveLink?: string;
@@ -33,12 +40,13 @@ export interface ContactMethod {
   variant: 'default' | 'outline';
 }
 
-export interface Experience {
+export interface Experience extends AppwriteDocument {
+  $id: string;
   company: string;
   role: string;
   period: string;
   description: string;
-  skills: string[];
+  skills: string;
   emoji?: string;
 }
 
