@@ -28,7 +28,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection, setActiveSection
         <div className="max-w-6xl mx-auto px-4 md:px-6 py-3 md:py-4">
           <div className="flex justify-between items-center">
             <Link to="/" className="text-lg md:text-xl font-bold hover:text-primary transition-colors">
-        @fayyadrc
+        Fayyad Rahman
       </Link>
             <div className="hidden md:flex space-x-6 md:space-x-8">
               {navigationItems.map((item) => (

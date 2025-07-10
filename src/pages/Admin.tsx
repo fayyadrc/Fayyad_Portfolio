@@ -29,8 +29,6 @@ const AdminPage = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'experiences' | 'projects'>('experiences');
-
-  // Form states
   const [editingExperience, setEditingExperience] = useState<Experience | null>(null);
   const [editingProject, setEditingProject] = useState<Project | null>(null);
   const [showExperienceForm, setShowExperienceForm] = useState(false);
@@ -40,9 +38,7 @@ const AdminPage = () => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(() => { fetchData(); }, []);
 
   const fetchData = async () => {
     try {
@@ -60,12 +56,11 @@ const AdminPage = () => {
     }
   };
 
-  // Experience handlers
   const handleSaveExperience = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if ((editingExperience as Experience | null)?.$id) {
-        await experienceService.updateExperience(editingExperience!.$id, expForm);
+      if (editingExperience?.$id) {
+        await experienceService.updateExperience(editingExperience.$id, expForm);
       } else {
         await experienceService.createExperience(expForm);
       }
@@ -95,12 +90,11 @@ const AdminPage = () => {
     }
   };
 
-  // Project handlers
   const handleSaveProject = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if ((editingProject as Project | null)?.$id) {
-        await projectService.updateProject(editingProject!.$id, projForm);
+      if (editingProject?.$id) {
+        await projectService.updateProject(editingProject.$id, projForm);
       } else {
         await projectService.createProject(projForm);
       }
@@ -137,199 +131,316 @@ const AdminPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background p-4 md:p-6">
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
-        </div>
+      <div className="min-h-screen bg-background p-4 md:p-6 flex justify-center items-center">
+        <div className="animate-spin rounded-full h-24 w-24 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-background p-4 md:p-6 pt-20 md:pt-28">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6 md:mb-8">
-          <h1 className="text-2xl md:text-4xl font-bold">Admin Dashboard</h1>
-          <Button onClick={handleLogout} variant="outline" className="w-full md:w-auto">Logout</Button>
-        </div>
-        {/* Tabs */}
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 mb-6 md:mb-8">
-          <button
-            onClick={() => setActiveTab('experiences')}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors text-sm md:text-base ${
-              activeTab === 'experiences'
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted text-muted-foreground hover:bg-muted/80'
-            }`}
-          >
-            Experiences ({experiences.length})
-          </button>
-          <button
-            onClick={() => setActiveTab('projects')}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors text-sm md:text-base ${
-              activeTab === 'projects'
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted text-muted-foreground hover:bg-muted/80'
-            }`}
-          >
-            Projects ({projects.length})
-          </button>
+      <div className="max-w-5xl mx-auto space-y-8">
+        <div className="flex justify-between items-center">
+          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+          <Button onClick={handleLogout} variant="outline" className="px-4 py-2">Logout</Button>
         </div>
 
-        {/* Experiences Tab */}
-        {activeTab === 'experiences' && (
-          <div>
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
-              <h2 className="text-xl md:text-2xl font-semibold">Experiences</h2>
-              <Button 
-                onClick={() => { setShowExperienceForm(true); setEditingExperience(null); setExpForm(emptyExperience); }}
-                className="w-full sm:w-auto"
+        <div className="flex gap-4">
+          <Button variant={activeTab === 'experiences' ? 'default' : 'outline'} onClick={() => setActiveTab('experiences')}>
+            Experiences ({experiences.length})
+          </Button>
+          <Button variant={activeTab === 'projects' ? 'default' : 'outline'} onClick={() => setActiveTab('projects')}>
+            Projects ({projects.length})
+          </Button>
+        </div>
+
+        {/* Experience Form */}
+        {showExperienceForm && (
+          <div className="bg-card border p-6 rounded-xl mb-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">
+                {editingExperience ? 'Edit Experience' : 'Add New Experience'}
+              </h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setShowExperienceForm(false);
+                  setEditingExperience(null);
+                  setExpForm(emptyExperience);
+                }}
               >
-                <Plus className="w-4 h-4 mr-2" /> Add Experience
+                <X className="w-4 h-4" />
               </Button>
             </div>
-            {showExperienceForm && (
-              <form onSubmit={handleSaveExperience} className="rounded-xl shadow p-4 md:p-8 mb-6 md:mb-8 max-w-2xl mx-auto border border-border">
-                <h3 className="text-lg md:text-xl font-semibold mb-4 md:mb-6 text-primary flex items-center gap-2">
-                  {editingExperience ? <Edit2 className="w-4 h-4 md:w-5 md:h-5" /> : <Plus className="w-4 h-4 md:w-5 md:h-5" />} {editingExperience ? 'Edit Experience' : 'Add Experience'}
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Company</label>
-                    <input required className="input w-full text-sm md:text-base" placeholder="Company" value={expForm.company} onChange={e => setExpForm(f => ({ ...f, company: e.target.value }))} />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Role</label>
-                    <input required className="input w-full text-sm md:text-base" placeholder="Role" value={expForm.role} onChange={e => setExpForm(f => ({ ...f, role: e.target.value }))} />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Period</label>
-                    <input required className="input w-full text-sm md:text-base" placeholder="Period" value={expForm.period} onChange={e => setExpForm(f => ({ ...f, period: e.target.value }))} />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Emoji</label>
-                    <input className="input w-full text-sm md:text-base" placeholder="Emoji (optional)" value={expForm.emoji} onChange={e => setExpForm(f => ({ ...f, emoji: e.target.value }))} />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium mb-1">Description</label>
-                    <textarea required className="input w-full min-h-[60px] resize-y text-sm md:text-base" placeholder="Description" value={expForm.description} onChange={e => setExpForm(f => ({ ...f, description: e.target.value }))} />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium mb-1">Skills (comma separated)</label>
-                    <input required className="input w-full text-sm md:text-base" placeholder="e.g. Python, Pandas, Numpy" value={expForm.skills} onChange={e => setExpForm(f => ({ ...f, skills: e.target.value }))} />
-                  </div>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-3 mt-6 md:mt-8 justify-end">
-                  <Button type="submit" className="bg-primary text-white flex items-center gap-1 shadow-md hover:bg-primary/90 text-sm md:text-base"><Save className="w-4 h-4" /> Save</Button>
-                  <Button type="button" variant="outline" onClick={() => { setShowExperienceForm(false); setEditingExperience(null); setExpForm(emptyExperience); }} className="flex items-center gap-1 text-sm md:text-base"><X className="w-4 h-4" /> Cancel</Button>
-                </div>
-              </form>
-            )}
-            <ul className="space-y-3 md:space-y-4">
-              {experiences.map(exp => (
-                <li key={exp.$id} className="bg-card rounded-lg shadow p-3 md:p-4">
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
-                    <div className="flex-1">
-                      <div className="font-semibold text-base md:text-lg">{exp.company} <span className="text-sm md:text-base font-normal">({exp.period})</span></div>
-                      <div className="text-xs md:text-sm text-muted-foreground">{exp.role}</div>
-                      <div className="text-xs md:text-sm mt-1">{exp.description}</div>
-                      <div className="flex flex-wrap gap-1.5 md:gap-2 mt-2">
-                        {exp.skills.split(',').map((skill, i) => (
-                          <span key={i} className="px-2 py-1 bg-muted text-xs rounded-md">{skill.trim()}</span>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="flex gap-2 self-end md:self-auto">
-                      <Button variant="outline" size="sm" onClick={() => handleEditExperience(exp)}><Edit2 className="w-3 h-3 md:w-4 md:h-4" /></Button>
-                      <Button variant="destructive" size="sm" onClick={() => handleDeleteExperience(exp.$id)}><Trash2 className="w-3 h-3 md:w-4 md:h-4" /></Button>
-                    </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
+            
+            <form onSubmit={handleSaveExperience} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Company</label>
+                <input
+                  type="text"
+                  value={expForm.company}
+                  onChange={(e) => setExpForm({...expForm, company: e.target.value})}
+                  className="w-full p-2 border rounded-md bg-background"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">Role</label>
+                <input
+                  type="text"
+                  value={expForm.role}
+                  onChange={(e) => setExpForm({...expForm, role: e.target.value})}
+                  className="w-full p-2 border rounded-md bg-background"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">Period</label>
+                <input
+                  type="text"
+                  value={expForm.period}
+                  onChange={(e) => setExpForm({...expForm, period: e.target.value})}
+                  className="w-full p-2 border rounded-md bg-background"
+                  placeholder="e.g., 2022 - 2024"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">Emoji</label>
+                <input
+                  type="text"
+                  value={expForm.emoji}
+                  onChange={(e) => setExpForm({...expForm, emoji: e.target.value})}
+                  className="w-full p-2 border rounded-md bg-background"
+                  maxLength={2}
+                />
+              </div>
+              
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium mb-1">Description</label>
+                <textarea
+                  value={expForm.description}
+                  onChange={(e) => setExpForm({...expForm, description: e.target.value})}
+                  className="w-full p-2 border rounded-md bg-background"
+                  rows={3}
+                  required
+                />
+              </div>
+              
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium mb-1">Skills (comma-separated)</label>
+                <input
+                  type="text"
+                  value={expForm.skills}
+                  onChange={(e) => setExpForm({...expForm, skills: e.target.value})}
+                  className="w-full p-2 border rounded-md bg-background"
+                  placeholder="React, TypeScript, Node.js"
+                  required
+                />
+              </div>
+              
+              <div className="md:col-span-2 flex gap-2 pt-4">
+                <Button type="submit">
+                  <Save className="w-4 h-4 mr-2" />
+                  {editingExperience ? 'Update' : 'Save'}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setShowExperienceForm(false);
+                    setEditingExperience(null);
+                    setExpForm(emptyExperience);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
           </div>
         )}
 
-        {/* Projects Tab */}
-        {activeTab === 'projects' && (
-          <div>
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
-              <h2 className="text-xl md:text-2xl font-semibold">Projects</h2>
-              <Button 
-                onClick={() => { setShowProjectForm(true); setEditingProject(null); setProjForm(emptyProject); }}
-                className="w-full sm:w-auto"
+        {/* Project Form */}
+        {showProjectForm && (
+          <div className="bg-card border p-6 rounded-xl mb-6">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold">
+                {editingProject ? 'Edit Project' : 'Add New Project'}
+              </h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setShowProjectForm(false);
+                  setEditingProject(null);
+                  setProjForm(emptyProject);
+                }}
               >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
+            
+            <form onSubmit={handleSaveProject} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-1">Title</label>
+                <input
+                  type="text"
+                  value={projForm.title}
+                  onChange={(e) => setProjForm({...projForm, title: e.target.value})}
+                  className="w-full p-2 border rounded-md bg-background"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">Status</label>
+                <select
+                  value={projForm.status}
+                  onChange={(e) => setProjForm({...projForm, status: e.target.value})}
+                  className="w-full p-2 border rounded-md bg-background"
+                  required
+                >
+                  <option value="Under Development">Under Development</option>
+                  <option value="Completed">Completed</option>
+                  <option value="On Hold">On Hold</option>
+                  <option value="Archived">Archived</option>
+                </select>
+              </div>
+              
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium mb-1">Description</label>
+                <textarea
+                  value={projForm.description}
+                  onChange={(e) => setProjForm({...projForm, description: e.target.value})}
+                  className="w-full p-2 border rounded-md bg-background"
+                  rows={3}
+                  required
+                />
+              </div>
+              
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium mb-1">Technologies (comma-separated)</label>
+                <input
+                  type="text"
+                  value={projForm.technologies}
+                  onChange={(e) => setProjForm({...projForm, technologies: e.target.value})}
+                  className="w-full p-2 border rounded-md bg-background"
+                  placeholder="React, TypeScript, Tailwind"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">GitHub URL</label>
+                <input
+                  type="url"
+                  value={projForm.github}
+                  onChange={(e) => setProjForm({...projForm, github: e.target.value})}
+                  className="w-full p-2 border rounded-md bg-background"
+                  placeholder="https://github.com/username/repo"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium mb-1">Live Link (optional)</label>
+                <input
+                  type="url"
+                  value={projForm.liveLink}
+                  onChange={(e) => setProjForm({...projForm, liveLink: e.target.value})}
+                  className="w-full p-2 border rounded-md bg-background"
+                  placeholder="https://example.com"
+                />
+              </div>
+              
+              <div className="md:col-span-2 flex gap-2 pt-4">
+                <Button type="submit">
+                  <Save className="w-4 h-4 mr-2" />
+                  {editingProject ? 'Update' : 'Save'}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => {
+                    setShowProjectForm(false);
+                    setEditingProject(null);
+                    setProjForm(emptyProject);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </div>
+        )}
+
+        {activeTab === 'experiences' && (
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-semibold">Experiences</h2>
+              <Button onClick={() => { setShowExperienceForm(true); setEditingExperience(null); setExpForm(emptyExperience); }}>
+                <Plus className="w-4 h-4 mr-2" /> Add Experience
+              </Button>
+            </div>
+            {experiences.map((exp) => (
+              <div key={exp.$id} className="transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-white/10 bg-card border p-4 rounded-xl">
+                <div className="flex justify-between">
+                  <div>
+                    <h3 className="font-bold text-lg">{exp.emoji} {exp.company} <span className="text-sm text-muted-foreground">({exp.period})</span></h3>
+                    <p className="text-muted-foreground text-sm">{exp.role}</p>
+                    <p className="mt-1 text-sm">{exp.description}</p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {exp.skills.split(',').map((s, i) => (
+                        <span key={i} className="px-2 py-1 text-xs bg-muted rounded-md border">{s.trim()}</span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="space-x-2">
+                    <Button size="sm" variant="outline" onClick={() => handleEditExperience(exp)}><Edit2 className="w-4 h-4" /></Button>
+                    <Button size="sm" variant="destructive" onClick={() => handleDeleteExperience(exp.$id)}><Trash2 className="w-4 h-4" /></Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === 'projects' && (
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-semibold">Projects</h2>
+              <Button onClick={() => { setShowProjectForm(true); setEditingProject(null); setProjForm(emptyProject); }}>
                 <Plus className="w-4 h-4 mr-2" /> Add Project
               </Button>
             </div>
-            {showProjectForm && (
-              <form onSubmit={handleSaveProject} className="bg-card rounded-xl shadow p-4 md:p-8 mb-6 md:mb-8 max-w-2xl mx-auto border border-border">
-                <h3 className="text-lg md:text-xl font-semibold mb-4 md:mb-6 text-primary flex items-center gap-2">
-                  {editingProject ? <Edit2 className="w-4 h-4 md:w-5 md:h-5" /> : <Plus className="w-4 h-4 md:w-5 md:h-5" />} {editingProject ? 'Edit Project' : 'Add Project'}
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            {projects.map((proj) => (
+              <div key={proj.$id} className="transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:hover:shadow-white/10 bg-card border p-4 rounded-xl">
+                <div className="flex justify-between">
                   <div>
-                    <label className="block text-sm font-medium mb-1">Title</label>
-                    <input required className="input w-full text-sm md:text-base" placeholder="Title" value={projForm.title} onChange={e => setProjForm(f => ({ ...f, title: e.target.value }))} />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Status</label>
-                    <input required className="input w-full text-sm md:text-base" placeholder="Status" value={projForm.status} onChange={e => setProjForm(f => ({ ...f, status: e.target.value }))} />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium mb-1">Description</label>
-                    <textarea required className="input w-full min-h-[60px] resize-y text-sm md:text-base" placeholder="Description" value={projForm.description} onChange={e => setProjForm(f => ({ ...f, description: e.target.value }))} />
-                  </div>
-                  <div className="md:col-span-2">
-                    <label className="block text-sm font-medium mb-1">Technologies (comma separated)</label>
-                    <input required className="input w-full text-sm md:text-base" placeholder="e.g. React, Tailwind CSS, Supabase" value={projForm.technologies} onChange={e => setProjForm(f => ({ ...f, technologies: e.target.value }))} />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">GitHub Link</label>
-                    <input required className="input w-full text-sm md:text-base" placeholder="GitHub Link" value={projForm.github} onChange={e => setProjForm(f => ({ ...f, github: e.target.value }))} />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-1">Live Link</label>
-                    <input className="input w-full text-sm md:text-base" placeholder="Live Link (optional)" value={projForm.liveLink} onChange={e => setProjForm(f => ({ ...f, liveLink: e.target.value }))} />
-                  </div>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-3 mt-6 md:mt-8 justify-end">
-                  <Button type="submit" className="bg-primary text-white flex items-center gap-1 shadow-md hover:bg-primary/90 text-sm md:text-base"><Save className="w-4 h-4" /> Save</Button>
-                  <Button type="button" variant="outline" onClick={() => { setShowProjectForm(false); setEditingProject(null); setProjForm(emptyProject); }} className="flex items-center gap-1 text-sm md:text-base"><X className="w-4 h-4" /> Cancel</Button>
-                </div>
-              </form>
-            )}
-            <ul className="space-y-3 md:space-y-4">
-              {projects.map(proj => (
-                <li key={proj.$id} className="bg-card rounded-lg shadow p-3 md:p-4">
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
-                    <div className="flex-1">
-                      <div className="font-semibold text-base md:text-lg">{proj.title}</div>
-                      <div className="text-xs md:text-sm text-muted-foreground">{proj.status}</div>
-                      <div className="text-xs md:text-sm mt-1">{proj.description}</div>
-                      <div className="flex flex-wrap gap-1.5 md:gap-2 mt-2">
-                        {proj.technologies.split(',').map((tech, i) => (
-                          <span key={i} className="px-2 py-1 bg-muted text-xs rounded-md">{tech.trim()}</span>
-                        ))}
-                      </div>
-                      <div className="text-xs mt-2">
-                        <a href={proj.github} target="_blank" rel="noopener noreferrer" className="text-primary underline">GitHub</a>
-                        {proj.liveLink && (
-                          <>
-                            {' | '}
-                            <a href={proj.liveLink} target="_blank" rel="noopener noreferrer" className="text-primary underline">Live</a>
-                          </>
-                        )}
-                      </div>
+                    <h3 className="font-bold text-lg">{proj.title}</h3>
+                    <p className="text-muted-foreground text-sm">{proj.status}</p>
+                    <p className="mt-1 text-sm">{proj.description}</p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {proj.technologies.split(',').map((tech, i) => (
+                        <span key={i} className="px-2 py-1 text-xs bg-muted rounded-md border">{tech.trim()}</span>
+                      ))}
                     </div>
-                    <div className="flex gap-2 self-end md:self-auto">
-                      <Button variant="outline" size="sm" onClick={() => handleEditProject(proj)}><Edit2 className="w-3 h-3 md:w-4 md:h-4" /></Button>
-                      <Button variant="destructive" size="sm" onClick={() => handleDeleteProject(proj.$id)}><Trash2 className="w-3 h-3 md:w-4 md:h-4" /></Button>
+                    <div className="mt-2 text-xs">
+                      <a href={proj.github} className="text-primary underline mr-2">GitHub</a>
+                      {proj.liveLink && <a href={proj.liveLink} className="text-primary underline">Live</a>}
                     </div>
                   </div>
-                </li>
-              ))}
-            </ul>
+                  <div className="space-x-2">
+                    <Button size="sm" variant="outline" onClick={() => handleEditProject(proj)}><Edit2 className="w-4 h-4" /></Button>
+                    <Button size="sm" variant="destructive" onClick={() => handleDeleteProject(proj.$id)}><Trash2 className="w-4 h-4" /></Button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>

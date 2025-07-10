@@ -30,7 +30,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
-      <form onSubmit={handleSubmit} className="bg-card border border-border rounded-xl shadow p-6 md:p-8 w-full max-w-sm md:max-w-md">
+      <form onSubmit={handleSubmit} className="bg-card border border-border rounded-xl shadow p-4 md:p-8 w-full max-w-sm md:max-w-md">
         <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-center">Admin Login</h2>
         {error && (
           <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded text-sm">
@@ -38,8 +38,9 @@ const Login: React.FC = () => {
           </div>
         )}
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-1">Email</label>
+          <label htmlFor="email" className="block text-sm font-medium mb-1">Email</label>
           <input
+            id="email"
             type="email"
             className="input w-full text-sm md:text-base"
             value={email}
@@ -50,8 +51,9 @@ const Login: React.FC = () => {
           />
         </div>
         <div className="mb-6">
-          <label className="block text-sm font-medium mb-1">Password</label>
+          <label htmlFor="password" className="block text-sm font-medium mb-1">Password</label>
           <input
+            id="password"
             type="password"
             className="input w-full text-sm md:text-base"
             value={password}
@@ -76,4 +78,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login; 
+export default Login;

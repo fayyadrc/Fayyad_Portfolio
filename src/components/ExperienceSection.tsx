@@ -50,7 +50,7 @@ const ExperienceSection: React.FC = () => {
                             >
                                 {/* Experience card */}
                                 <div className={`${isMobile ? 'w-full' : 'w-1/2'} px-2 md:px-6`}>
-                                    <div className="bg-card border border-border rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg transition duration-300">
+                                    <div className="bg-card border border-border rounded-lg p-4 md:p-6 shadow-sm hover:shadow-lg dark:hover:shadow-2xl dark:hover:shadow-primary/10 transition-all duration-300 hover:scale-105 hover:-translate-y-2 cursor-pointer">
                                         <div className="flex items-center justify-between mb-3">
                                             <h3 className="text-lg md:text-xl font-semibold">{exp.company}</h3>
                                             <span className="text-xl md:text-2xl">{exp.emoji}</span>
